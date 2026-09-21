@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="GorealEngine/GorealEngine.csproj" />
+  <Project Path="Game/Game.csproj" />
+</Solution>

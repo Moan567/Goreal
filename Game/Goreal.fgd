@@ -1,0 +1,58 @@
+// Goreal FGD for TrenchBroom - provides func_door / triggers for the engine
+// Place this file in Game/ and add it in Preferences -> Games -> Goreal -> Entity Definitions
+
+@SolidClass = worldspawn : "World" []
+
+@PointClass color(0 255 0) size(-16 -16 -24, 16 16 32) = info_player_start : "Player Start" [
+    origin(vector) : "Origin"
+    angle(integer) : "Angle (yaw)" : 0 : "0=East +X, 90=North (-Z), 180=West, 270=South, -1=Up, -2=Down"
+    targetname(target_source) : "Targetname"
+]
+
+@SolidClass color(0 128 255) size(-8 -8 -8, 8 8 8) = func_door : "Door (slides along angle)" [
+    angle(integer) : "Move direction" : 0 : "Angle -1=Up (+Y), -2=Down (-Y), 0=+X, 90=North (-Z), 180=-X, 270=+Z"
+    speed(integer) : "Speed (quake units/s)" : 100
+    wait(float) : "Wait before close (-1=stay open)" : 3
+    lip(integer) : "Lip (units left visible)" : 8
+    targetname(target_source) : "Targetname (if set, needs trigger)"
+    target(target_destination) : "Target to fire when opened"
+]
+
+@SolidClass color(255 128 0) size(-8 -8 -8, 8 8 8) = func_detail : "Detail (static, no collision special)" []
+
+@SolidClass color(255 0 255) size(-8 -8 -8, 8 8 8) = trigger_multiple : "Trigger volume (fires target when player touches)" [
+    target(target_destination) : "Target (door targetname)"
+    targetname(target_source) : "Targetname (optional)"
+    wait(float) : "Wait between fires" : 0.5
+]
+
+@SolidClass color(255 0 128) size(-8 -8 -8, 8 8 8) = trigger_once : "Trigger once" [
+    target(target_destination) : "Target"
+    wait(float) : "Wait" : 0.5
+]
+
+@PointClass color(255 165 0) size(-16 -16 -16, 16 16 16) model({{ model }}) = misc_model : "Static prop (obj/glTF)" [
+    model(studio) : "Model path" : "models/crate.obj" : "Relative to Game/, e.g. models/crate.obj"
+    angles(vector) : "Angles (pitch yaw roll)" : "0 0 0"
+    scale(float) : "Scale" : 1
+]
+
+@PointClass color(255 200 0) size(-16 -16 -16, 16 16 16) model({{ model }}) = prop_bob : "Bobbing prop" [
+    model(studio) : "Model" : "models/crate.obj"
+    angles(vector) : "Angles" : "0 0 0"
+    speed(float) : "Bob speed (Hz)" : 0.5
+    height(float) : "Bob height (units)" : 8
+]
+
+@SolidClass color(255 100 0) size(-8 -8 -8, 8 8 8) = func_rotating : "Rotating brush (animated)" [
+    speed(integer) : "Speed deg/s" : 45
+    angles(vector) : "Axis (usually 0 90 0 for yaw)" : "0 0 0"
+    model(studio) : "Optional model instead of brushes" : ""
+]
+
+@SolidClass color(200 100 255) size(-8 -8 -8, 8 8 8) = func_movelinear : "Linear mover (back-forth)" [
+    movedir(vector) : "Move direction" : "0 0 1"
+    speed(integer) : "Speed" : 80
+    distance(integer) : "Distance (units, 0=auto from lip)" : 64
+    wait(float) : "Wait at ends" : 1
+]
